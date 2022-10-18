@@ -4,6 +4,32 @@ const jwt = require('jsonwebtoken')
 const app = express()
 const port = 3000
 const multer = require('multer')
+const mysql = require('mysql2');
+
+const connection = mysql.createConnection(
+  {
+    host: 'localhost',
+    user: 'root',
+    password: 'root',
+    database : 'Users',
+    port: 13306
+  }
+)
+connection.connect((err) => 
+{
+  if(err)
+  {
+    console.log('Connection Error' + err.stack)
+    return;
+  }
+  else
+  console.log('Connection Done')
+})
+connection.query('SELECT 1 + 1 AS solution', (err, rows, fields) => {
+  if (err) throw err
+
+  console.log('The solution is: ', rows[0].solution)
+})
 
 const storage = multer.diskStorage({
   filename: function (req,file,cb) {

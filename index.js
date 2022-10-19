@@ -25,10 +25,10 @@ connection.connect((err) =>
   else
   console.log('Connection Done')
 })
-connection.query('SELECT 1 + 1 AS solution', (err, rows, fields) => {
+connection.query('INSERT into `User` (LastName,FirstName) Values(?,?)',['Das','Srabonti','42'], (err, rows, fields) => {
   if (err) throw err
 
-  console.log('The solution is: ', rows[0].solution)
+  console.log('Inserted');
 })
 
 const storage = multer.diskStorage({
@@ -55,7 +55,10 @@ app.post('/postAudio',upload.single('file'),(req,res)=>
 {
   console.log(req.body)
   console.log(req.file)
-  res.send({message: "Success"})
+  if(req.file.mimetype === 'audio/mpeg')
+  res.status(200).send({message: "Success"})
+  else
+  res.status(400).send({message:"Unsupported File Type"})
 })
 
 app.post('/login',(req,res)=> 

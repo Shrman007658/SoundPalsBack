@@ -8,11 +8,11 @@ class MySQLConnectionFactory {
   async createConnection() {
     return new Promise((resolve, reject) => {
       const mysqlconn = mysql.createConnection({
-        host: 'localhost',
-        user: 'root',
-        password: 'root',
-        database: 'Users',
-        port: 13306
+        host: process.env.MYSQL_HOST,
+        user: process.env.MYSQL_USER,
+        password: process.env.MYSQL_PASSWORD,
+        database: process.env.MYSQL_DATABASE,
+        port: process.env.MYSQL_PORT
       });
 
       mysqlconn.connect((err) => {
